@@ -4,13 +4,19 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const bodyParser = require('body-parser');
+const appointmentRoutes = require("./routes/appointment.router");
+require("./db");
+
+const port = 4000;
+
+app.listen(process.env.PORT || port , console.log(`Server is running at port ${port}`));
+             
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
-const api = require('./routes/api');
 app.use(cors());
-app.use('/api', api);
+app.use('/api/appointment', appointmentRoutes);
 
 app.use(function (req, res, next) {
   //set headers to allow cross origin request.
@@ -26,5 +32,5 @@ app.use(function (req, res, next) {
 app.get('/api', function (req, res) {
     res.end('file catcher example');
   });
-app.listen(process.env.PORT || 5000);
-console.log('Node server running on port', 5000);
+
+
